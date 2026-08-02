@@ -1,0 +1,30 @@
+public Node reversewithRecursion(Node head) {
+	if(head==null||head.next==null)
+		return head;
+	
+	Node newhead=reversewithRecursion(head.next);
+	Node front=head.next;
+	front.next=head;
+	head.next=null;
+	
+	return newhead;
+}
+
+two different approaches
+if (head == null || head.next == null)
+    return head;
+
+ListNode temp = head;
+ListNode front = head.next;
+ListNode back = null;
+
+while (temp != null) {
+    temp.next = back;
+    back = temp;
+    temp = front;
+    if (temp != null) {
+        front = temp.next;
+    }
+}
+
+return back;
