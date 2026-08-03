@@ -1,0 +1,180 @@
+--
+-> Completed the Stack Assignments on Gradious
+-> /**
+//Finding the list is isPalindrome or not
+class Solution {
+    public boolean isPalindrome(ListNode head) {
+        if(head.next==null)
+        return true;
+       ListNode slow=head;
+      ListNode fast=head;
+       while(fast.next!=null&&fast.next.next!=null){
+          slow=slow.next;
+          fast=fast.next.next;
+       }
+       ListNode newHead=reverse(slow.next);
+       ListNode first=head;
+       ListNode second=newHead;
+       while(second!=null){
+         if(first.val!=second.val){
+            reverse(newHead);
+            return false;
+         }
+         first=first.next;
+         second=second.next;
+       }
+       reverse(newHead);
+       return true;
+
+    }
+    public ListNode reverse(ListNode head){
+        if(head.next==null)
+        return head;
+
+        ListNode newHead=reverse(head.next);
+        ListNode front=head.next;
+        front.next=head;
+        head.next=null;
+        return newHead;
+    }
+}
+/*
+*this is the optimal one compared to the above one beacause 
+*in the approach we are using the recursion beacause it cause space complexeity of O(n)
+*/
+class Solution {
+    public boolean isPalindrome(ListNode head) {
+        if(head.next==null)
+        return true;
+
+      ListNode slow=head;
+      ListNode fast=head;
+       while(fast!=null&&fast.next!=null){
+          slow=slow.next;
+          fast=fast.next.next;
+       }
+      
+      ListNode prev=null;
+      ListNode curr=slow;
+      ListNode Next;
+      while(curr!=null){
+        Next=curr.next;
+        curr.next=prev;
+        prev=curr;
+        curr=Next;
+      }
+      
+      ListNode first=head;
+       while(prev!=null){
+         if(first.val!=prev.val){
+            return false;
+         }
+         first=first.next;
+         prev=prev.next;
+       }
+    
+
+       return true;
+
+    }
+}
+----------------------------------------------------------
+// add 1 to a number represented in the linkedlist
+class Solution {
+    public Node addOne(Node head) {
+        int c=reverse(head);
+        if(c==1){
+        Node newhead=new Node(1);
+        newhead.next=head;
+        return newhead;
+        }
+        return head;
+    }
+    public int reverse(Node head){
+        if(head==null){
+            return 1;
+        }
+        int c=reverse(head.next);
+        head.data=head.data+c;
+        if(head.data==10)
+        {
+            head.data=0;
+            return 1;
+        }
+        return 0;
+    }
+}
+-----------------------------------------------------------
+in this i have solved in two ways one is space-complexity of O(n) and another one is O(1)
+public class Solution {
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+       /* if(headA==null||headB==null)
+        return null;
+
+        HashMap<ListNode,Integer> hm=new HashMap<>();
+        while(headA!=null){
+            hm.put(headA,1);
+            headA=headA.next;
+        }
+        while(headB!=null){
+            if(hm.containsKey(headB)){
+                return headB;
+            }
+            headB=headB.next;
+        }
+        return null;*/
+        ListNode t1=headA;
+        ListNode t2=headB;
+        int n1=0,n2=0;
+        while(t1!=null){
+            n1++;
+            t1=t1.next;
+        }
+        while(t2!=null){
+            n2++;
+            t2=t2.next;
+        }
+        if(n1<n2){
+            return collosion(headA,headB,n2-n1);
+        }
+        else{
+            return collosion(headB,headA,n1-n2);
+        }
+    }
+    public ListNode collosion(ListNode t1,ListNode t2,int d){
+        while(d!=0){
+            d--;
+            t2=t2.next;
+        }
+        while(t1!=t2){
+            t1=t1.next;
+            t2=t2.next;
+        }
+        return t1;
+    }
+}
+--------------------------------------
+//Finding the length of the loop in the linkedlist
+class Solution {
+    public int lengthOfLoop(Node head) {
+        // code here
+        Node slow=head;
+        Node fast=head;
+        while(fast!=null&&fast.next!=null){
+            slow=slow.next;
+            fast=fast.next.next;
+            if(fast==slow){
+               return length(slow,fast);
+            }
+        }
+        return 0;
+    }
+    public int length(Node slow,Node fast){
+       int c=0;
+        do{
+            c++;
+            slow=slow.next;
+        }while(slow!=fast);
+        return c;
+    }
+}
