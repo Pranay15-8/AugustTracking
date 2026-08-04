@@ -1,0 +1,164 @@
+------------------------------------------------------------------------------------
+---TYPES OF CABLES---
+*coaxial cables(10Base2,10Base5)
+*unshielded Twisted pair cables(10BaseT,100BaseT)
+*fibre optic cables(100 Base Fx)
+if any attenuation occurs we can use the Repeaters
+**Repeaters is pure hardware device that Regenerate the Strength of the Signal
+Types Of Repeaters:
+1.optical ""
+2.analog  ""
+3.Digital ""
+4.Satelite ""
+5.micro-wave ""
+------------------------------------------------------------------------------------
+/* Given an integer array nums where every element 
+appears three times except for one, which appears exactly once. 
+Find the single element and return it.*/
+T.C-> O(32*n)
+S.C-> O(1)
+class Solution {
+    public int singleNumber(int[] arr) {
+       //Bit Manipulation Concept
+       int sum=0;
+       for(int i=0;i<32;i++){
+        int c=0;
+        for(int a:arr){
+          if((a&(1<<i))!=0)
+          c++;
+        }
+        if(c%3!=0){
+            sum|=1<<i;
+        }
+       }
+       return sum;
+    }
+}
+-------------------------------------------------------------------
+//237. once you just read question and using this scenario
+How to become another person in the world? Two steps.
+One, change your appearance to whom you want to be.
+Two, kill that person.
+class Solution {
+    public void deleteNode(ListNode node) {
+        node.val=node.next.val;
+        node.next=node.next.next;
+        
+    }
+}
+------------------------------------------------------------
+//gfg
+class Solution {
+    static Node deleteAllOccurOfX(Node head, int x) {
+        Node temp=head;
+        while(temp!=null&&temp.data==x){
+            temp=temp.next;
+        }
+        
+        head=temp;
+        if(head!=null)
+        head.prev=null;
+        
+        while(temp!=null){
+            if(temp.data==x){
+                if(temp.prev!=null)
+                temp.prev.next=temp.next;
+                if(temp.next!=null)
+                temp.next.prev=temp.prev;
+            }
+            temp=temp.next;
+        }
+        return head;
+    }
+}
+---------------------------------------------------
+//gfg
+approach is two pointers
+class Solution {
+    public ArrayList<ArrayList<Integer>> givenSumPairs(Node head, int target) {
+        // code here
+        ArrayList<ArrayList<Integer>> ans=new ArrayList<>();
+        Node start=head;
+        Node end=head;
+        while(end.next!=null){
+            end=end.next;
+        }
+        while(start.data<end.data){
+            int sum=start.data+end.data;
+            if(sum<target){
+                start=start.next;
+            }else if(sum>target){
+                end=end.prev;
+            }
+            else{
+                ArrayList<Integer> al=new ArrayList<>();
+                al.add(start.data);
+                al.add(end.data);
+                ans.add(al);
+                start=start.next;
+                end=end.prev;
+            }
+        }
+        return ans;
+    }
+}
+-------------------------------------------------------
+//remove the removeDuplicates from the sorted list
+class Solution {
+    Node removeDuplicates(Node head) {
+        // code here
+        if(head==null){
+            return head;
+        }
+        Node slow=head;
+        Node fast=head;
+        while(fast!=null){
+            if(slow.data==fast.data){
+                slow.next=fast.next;
+                fast=fast.next;
+            }
+            else{
+                slow=slow.next;
+                fast=fast.next;
+            }
+        }
+        return head;
+    }
+}
+----------------------------------------
+class Solution {
+    public ListNode rotateRight(ListNode head, int k) {
+        if(head==null||head.next==null)
+        return head;
+
+        int size=0;
+        ListNode temp=head;
+        while(temp!=null){
+            size++;
+            temp=temp.next;
+        }
+        if(k%size==0)
+        return head;
+        
+        temp=head;
+        while(temp.next!=null){
+            temp=temp.next;
+        }
+        temp.next=head;
+
+        ListNode temp1=head;
+
+        int c=size-(k%size)-1;
+
+        while(c!=0){
+            c--;
+            temp1=temp1.next;
+        }
+
+        head=temp1.next;
+        temp1.next=null;
+
+        return head;  
+    }
+}
+---------------------------------------------------------
