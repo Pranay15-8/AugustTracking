@@ -1,0 +1,98 @@
+--it will take near about the O(n^3)
+//so better to use the priority queue
+class Solution {
+    public ListNode mergeKLists(ListNode[] lists) {
+        if(lists.length==0)
+        return null;
+        ListNode head=lists[0];
+        for(int i=1;i<lists.length;i++){
+            head=merge(head,lists[i]);
+        }
+        return head;
+    }
+    public ListNode merge(ListNode l1,ListNode l2){
+        ListNode dummyNode=new ListNode();
+        ListNode temp=dummyNode;
+        while(l1!=null&&l2!=null){
+            if(l1.val<l2.val){
+                temp.next=l1;
+                l1=l1.next;
+            }else{
+                temp.next=l2;
+                l2=l2.next;
+            }
+            temp=temp.next;
+        }
+        temp.next=(l1!=null)?l1:l2;
+       return dummyNode.next; 
+    }
+}
+---------------------------------------------------
+->the time complexity is O(k*n*logk)
+k-size of queue && n=assuming all the length of the lists are equal
+->the space complexity is O(k)
+class Solution {
+    public ListNode mergeKLists(ListNode[] lists) {
+
+        PriorityQueue<ListNode> pq=new PriorityQueue<>((a,b)->a.val-b.val);
+        for(ListNode temp:lists){
+            if(temp!=null)
+            pq.offer(temp);
+        }
+        ListNode d=new ListNode();
+        ListNode temp=d;
+        while(!pq.isEmpty()){
+            ListNode node=pq.poll();
+            if(node.next!=null){
+                pq.offer(node.next);
+            }
+            temp.next=node;
+            temp=temp.next;
+        }
+        return d.next;
+    }
+}
+---------------------------------------------------
+class Solution {
+    public Node copyRandomList(Node head) {
+        insert(head);
+        connectRandom(head);
+        return copy(head);
+    }
+    public void insert(Node head){
+        Node temp=head;
+        while(temp!=null){
+            Node node=new Node(temp.val);
+            node.next=temp.next;
+            temp.next=node;
+            temp=temp.next.next;
+        }
+    }
+    public void connectRandom(Node head){
+       Node temp=head;
+        while(temp!=null){
+            if(temp.random!=null)
+            temp.next.random=temp.random.next;
+            temp=temp.next.next;
+        }
+    }
+    public Node copy(Node head) {
+    Node dummy = new Node(-1);
+    Node copyTail = dummy;
+    Node temp = head;
+
+    while (temp != null) {
+        Node copy = temp.next;
+
+        temp.next = copy.next;      
+
+        copyTail.next = copy;       
+        copyTail = copy;
+
+        temp = temp.next;
+    }
+
+    return dummy.next;
+}
+}
+--------------------------------------------------
