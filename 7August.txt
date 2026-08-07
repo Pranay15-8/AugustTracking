@@ -1,0 +1,61 @@
+// first less progess day in August
+//Started with the Trees
+-----------------------------------------------
+class Solution {
+    public boolean isSymmetric(TreeNode root) {
+       return dfs(root.left,root.right);
+        
+    }
+    public boolean dfs(TreeNode Left,TreeNode Right){
+
+        if(Left==null&&Right==null)
+        return true;
+        if(Left==null||Right==null)
+        return false;
+        return (Left.val==Right.val)&&dfs(Left.left,Right.right)&&dfs(Left.right,Right.left);
+       
+    }
+}
+----------------------------------------------------------
+class Solution {
+    public boolean isSameTree(TreeNode p, TreeNode q) {
+        ArrayList<Integer> al1=new ArrayList<>();
+        ArrayList<Integer> al2=new ArrayList<>();
+        dfs(p,al1);
+        dfs(q,al2);
+        return al1.equals(al2);
+    }
+    public void dfs(TreeNode root,ArrayList<Integer> list){
+        if(root!=null){
+            list.add(root.val);
+            dfs(root.left,list);
+            if(root.left==null){
+                list.add(null);
+            }
+            dfs(root.right,list);
+            if(root.right==null){
+                list.add(null);
+            }
+        }
+    }
+}
+-----------------------------------------------------
+class Solution {
+    public boolean leafSimilar(TreeNode root1, TreeNode root2) {
+        ArrayList<Integer> r1=new ArrayList<>();
+        ArrayList<Integer> r2=new ArrayList<>();
+        dfs(root1,r1);
+        dfs(root2,r2);
+        return r1.equals(r2);
+    }
+    public void dfs(TreeNode root,ArrayList<Integer> list){
+      if(root!=null){
+        if(root.left==null&&root.right==null)
+        list.add(root.val);
+        dfs(root.left,list);
+        dfs(root.right,list);
+      }
+
+    }
+}
+----------------------------------------------------
