@@ -1,0 +1,78 @@
+->Circuit switching = Reserve a road
+Imagine booking an entire road from Hyderabad to Mumbai for your journey. The road is reserved for you.
+
+->Packet switching = Share the roads
+Your data is divided into packets. Each packet can use whatever available network route is suitable.
+
+Circuit Switching → Dedicated path → Reserved resources
+Packet Switching → Packets → Shared resources
+----------------------------------------------------------------------
+//572
+class Solution {
+    public boolean isSubtree(TreeNode root, TreeNode subRoot) {
+       if(root==null)
+       return false;
+
+       if((root.val==subRoot.val)&&same(root,subRoot))
+       return true;
+
+       return isSubtree(root.left,subRoot)||isSubtree(root.right,subRoot);
+    
+    }
+    public boolean same(TreeNode t,TreeNode s){
+        if(t==null&&s==null)
+        return true;
+        if(t==null||s==null)
+        return false;
+        if(t.val!=s.val)
+        return false;
+        return same(t.left,s.left)&&same(t.right,s.right);
+
+    }
+}
+---------------------------------------------------------------
+//543
+class Solution {
+    int ans=0;
+    public int diameterOfBinaryTree(TreeNode root) {
+        if(root==null)
+        return 0;
+       dia(root);
+     return ans;
+    }
+    public int dia(TreeNode root){
+        if(root==null)
+        return 0;
+
+        int l=dia(root.left);
+        int r=dia(root.right);
+        ans=Math.max(ans,l+r);
+
+        return 1+Math.max(l,r);
+    }
+}
+-----------------------------------------------
+//110
+class Solution {
+    public boolean isBalanced(TreeNode root) {
+        if(root==null)
+        return true;
+        int l=dfs(root.left,0);
+        int r=dfs(root.right,0);
+        int x=Math.abs(l-r);
+        if(x>1)
+        return false;
+      
+      return isBalanced(root.left)&&isBalanced(root.right);
+    }
+    public int dfs(TreeNode node,int c){
+        if(node!=null){
+            int l=dfs(node.left,c+1);
+            int r=dfs(node.right,c+1);
+            int max=Math.max(l,r);
+            return max;
+        }
+        return c;
+    }
+}
+--------------------------------
