@@ -1,0 +1,75 @@
+//144-using the Iterative Approach 
+public List<Integer> preOder(TreeNode root){
+   List<Integer> list=new ArrayList<>();
+        if(root==null)
+        return list;
+        Stack<TreeNode> st=new Stack<>();
+        st.push(root);
+        while(!st.isEmpty()){
+            TreeNode n=st.pop();
+            list.add(new Integer(n.val));
+            if(n.right!=null){
+                st.push(n.right);
+            }
+            if(n.left!=null){
+                st.push(n.left);
+            }
+        }
+        return list;
+}
+------------------------------------------------
+//94-Using Iterative Approach
+ public List<Integer> inorderTraversal(TreeNode root) {
+       /* List<Integer> ans=new ArrayList<>();
+        inorder(root, ans);
+        return ans;*/
+          List<Integer> list=new ArrayList<>();
+        if(root==null)
+        return list;
+        Stack<TreeNode> st=new Stack<>();
+        TreeNode n=root;
+       while(true){
+        if(n!=null){
+            st.push(n);
+            n=n.left;
+        }
+        else{
+            if(st.isEmpty())
+            break;
+
+            n=st.pop();
+            list.add(new Integer(n.val));
+            n=n.right;
+        }
+       }
+        return list;
+    }
+-----------------------------------------
+//145-Using Iterative Approach
+  public List<Integer> postorderTraversal(TreeNode root) {
+       /* List<Integer> al=new ArrayList<>();
+        post(root,al);
+        return al;*/
+
+        List<Integer> list=new ArrayList<>();
+        if(root==null)
+        return list;
+        Stack<TreeNode> st1=new Stack<>();
+        Stack<Integer> st2=new Stack<>();
+        st1.push(root);
+        while(!st1.isEmpty()){
+            TreeNode n=st1.pop();
+            st2.push(new Integer(n.val));
+            if(n.left!=null){
+                st1.push(n.left);
+            }
+            if(n.right!=null){
+                st1.push(n.right);
+            }
+        }
+        while(!st2.isEmpty()){
+            
+            list.add(new Integer(st2.pop()));
+        }
+        return list;
+    }
