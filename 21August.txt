@@ -1,0 +1,44 @@
+//optimal solution for verifying whether the element is present in the sorted 2D matrix or not
+
+public class TestClass {
+  public static boolean searchTwoDMatrix (int arr[][],int target) {  // Don't change the number of parameters
+     int m=arr.length;
+     int n=arr[0].length;
+     int i=0,j=m*n;
+     
+     while(i<=j){
+        int mid=(i+j)/2;
+        int r=mid/n;
+        int c=mid%n;
+        if(arr[r][c]==target)
+        return true;
+        else if(arr[r][c]>target)
+        j=mid-1;
+        else
+        i=mid+1;
+     }
+     return false;
+  }
+
+}
+-------------------------------------------------
+class Solution {
+    public int[] topKFrequent(int[] nums, int k) {
+        Map<Integer,Integer> hm=new HashMap<>();
+        for(int i=0;i<nums.length;i++){
+            hm.put(nums[i],hm.getOrDefault(nums[i],0)+1);
+        }
+        Queue<Map.Entry<Integer,Integer>> q=new PriorityQueue<>((a,b)->Integer.compare(b.getValue(),a.getValue()));
+        for(Map.Entry<Integer,Integer> e:hm.entrySet()){
+            q.offer(e);
+        }
+        int[] ans=new int[k];
+        for(int i=0;i<k;i++){
+            ans[i]=(q.poll().getKey());
+        }
+        return ans;
+        
+
+    }
+}
+--------------------------------------------
