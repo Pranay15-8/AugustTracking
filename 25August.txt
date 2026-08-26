@@ -1,0 +1,27 @@
+
+class Solution {
+    public int missingMultiple(int[] nums, int k) {
+       Set<Integer> s=new HashSet<>();
+       for(int a:nums)
+       s.add(a);
+       int a=k;
+       while(s.contains(a)){
+       a+=k;
+       }
+       return a;
+    }
+}
+-------------------------------------------------------
+
+
+  public static int mySqrt(int x) { // Don't change the number of parameters
+    int n=x;
+    while(n!=0){
+        n/=2;
+        if((n+1)*(n+1)<=x)
+        return n+1;
+        if(n*n<=x)
+        return n;
+    }
+    return n;
+  }
