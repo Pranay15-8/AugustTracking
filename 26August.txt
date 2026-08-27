@@ -1,0 +1,46 @@
+-------------------------------------------------
+class Solution {
+    public int kthSmallest(TreeNode root, int k) {
+        Queue<Integer> q=new PriorityQueue<>();
+        def(root,q);
+        while(k!=1){
+          q.poll();
+           k--;
+        }
+       
+        return q.peek();
+    }
+    public void def(TreeNode root,Queue<Integer> q){
+        if(root!=null){
+            def(root.left,q);
+            def(root.right,q);
+            int val=root.val;
+            q.add(val);
+        }
+    }
+}
+-----------------------------------------------
+class Solution {
+    public boolean findTarget(TreeNode root, int k) {
+        ArrayList<Integer> ans=new ArrayList<>();
+        fun(root,ans);
+        HashMap<Integer,Integer> hm=new HashMap<>();
+        for(int a:ans){
+            int val=k-a;
+            if(hm.containsKey(val)){
+                return true;
+            }
+            hm.put(a,1);
+        }
+        return false;
+        
+    }
+    public void fun(TreeNode root,ArrayList<Integer> ans){
+        if(root!=null){
+            fun(root.left,ans);
+            ans.add(root.val);
+            fun(root.right,ans);
+        }
+    }
+}
+------------------------------------------------------
