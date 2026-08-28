@@ -1,0 +1,155 @@
+
+class Solution {
+    int min=Integer.MAX_VALUE;
+    Integer prev=null;
+    public int getMinimumDifference(TreeNode root) {
+        if(root==null)return min;
+        getMinimumDifference(root.left);
+        if(prev!=null){
+            min=Math.min(min,root.val-prev);
+        }
+        prev=root.val;
+        getMinimumDifference(root.right);
+        return min;
+    }
+}------------------------------------------
+package com.trees;
+
+class BST {
+	public class Node{
+		int val;
+		Node left;
+		Node right;
+		int height;
+		public Node(int val) {
+			this.val=val;
+		}
+		public int getvalue() {
+			return val;
+		}
+	}
+	private Node root;
+	public BST() {
+		
+	}
+	
+	public int height(Node node) {
+		if(node==null)
+			return -1;
+		return node.height;
+	}
+	public boolean isEmpty() {
+		return root==null;
+	}
+	
+	public void display() {
+		display(this.root,"Root Node: ");
+	}
+	public void display(Node node,String details) {
+		if(node==null)
+			return;
+		System.out.println(details+node.getvalue());
+		display(node.left,"Left child of "+node.getvalue()+" : ");
+		display(node.right,"Right child of "+node.getvalue()+" : ");
+	
+	}
+	public void insert(int val) {
+		root=insert(root,val);
+		
+	}
+	public Node insert(Node node,int val) {
+		if(node==null) {
+			return node=new Node(val);
+		}
+		if(val<node.val) {
+			node.left=insert(node.left,val);
+		}
+		if(val>node.val) {
+			node.right=insert(node.right,val);
+		}
+		node.height=Math.max(height(node.left),height(node.right))+1;
+		return node;
+	}
+	public boolean balanced() {
+		return balanced(root);
+	}
+	public boolean balanced(Node node) {
+		if(node==null)
+			return true;
+		return Math.abs(height(node.left)-height(node.right))<=1&&balanced((node.left))&&balanced((node.right));
+	}
+	public void populate(int[] nums) {
+		for(int i=0;i<nums.length;i++) {
+			this.insert(nums[i]);
+		}
+	}
+	public void populateSorted(int[] nums) {
+		populateSorted(nums,0,nums.length);
+	}
+	private void populateSorted(int[] nums, int start, int end) {
+		if(start>=end)
+			return;
+		int m=(start+end)/2;
+		insert(nums[m]);
+		populateSorted(nums,start,m);
+		populateSorted(nums,m+1,end);
+		
+	}
+	public void preorder() {
+		preorder(root);
+	}
+	public void preorder(Node node) {
+		if(node==null)
+			return;
+		System.out.print(node.val);
+		preorder(node.left);
+		preorder(node.right);
+	}
+	public void inorder() {
+		inorder(root);
+	}
+	public void inorder(Node node) {
+		if(node==null)
+			return;
+		inorder(node.left);
+		System.out.print(node.val);
+		inorder(node.right);
+	}
+	public void postorder() {
+		postorder(root);
+	}
+	public void postorder(Node node) {
+		if(node==null)
+			return;
+		postorder(node.left);
+		postorder(node.right);
+		System.out.print(node.val);
+	}
+	
+
+	public static void main(String[] args) {
+		BST bs=new BST();
+		//int arr[]= {5,2,7,1,4,6,9,8,3,10};
+		//bs.populate(arr);
+		//bs.display();
+		int[] arr = {1,2,3,4,5,6,7,8,9};
+
+	    bs.populateSorted(arr);
+
+	    bs.display();
+
+	    System.out.print("\nPreorder: ");
+	    bs.preorder();
+
+	    System.out.print("\nInorder: ");
+	    bs.inorder();
+
+	    System.out.print("\nPostorder: ");
+	    bs.postorder();
+
+	    System.out.println("\nBalanced: " + bs.balanced());
+		
+	}
+	
+	
+}
